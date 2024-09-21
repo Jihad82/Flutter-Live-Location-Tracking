@@ -1,16 +1,19 @@
-# job_task
+# Live Location Tracker
 
-A new Flutter project.
+## Overview
+The **Live Location Tracker** app is a Flutter-based mobile application that allows users to track their live location and share it with others. It utilizes Google Maps for location visualization and Firebase for real-time data management.
 
-## Getting Started
+## Features
+- Real-time location tracking using GPS
+- Share location URL with others
+- Track the location of other users via URL
+- Display user markers on the map
+- Draw polylines to represent the path between users
 
-This project is a starting point for a Flutter application.
+## Requirements
+- Flutter SDK
+- Firebase project setup
+- Google Maps API key
+- `location`, `google_maps_flutter`, `get`, `cloud_firestore`, `firebase_auth` packages
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
