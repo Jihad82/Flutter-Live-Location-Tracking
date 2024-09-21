@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "545752071149",
+    "firebase_url": "https://maps-app-871ff-default-rtdb.firebaseio.com",
+    "project_id": "maps-app-871ff",
+    "storage_bucket": "maps-app-871ff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:545752071149:android:5128a73776bec94f13c5e4",
+        "android_client_info": {
+          "package_name": "com.example.job_task"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1UXd3ElZ4Ocyh9IuWCtwdqruESIoto-A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
