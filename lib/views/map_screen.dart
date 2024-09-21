@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/services.dart'; // For clipboard functionality
-
-import 'LocationController.dart';
+import '../controller/LocationController.dart';
 
 class MapScreen extends StatelessWidget {
   final LocationController locationController = Get.find();
@@ -34,6 +33,7 @@ class MapScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           FloatingActionButton(
+            backgroundColor: Colors.greenAccent,
             onPressed: () {
               _zoomToUserLocation(locationController.mapController);
             },
@@ -42,6 +42,8 @@ class MapScreen extends StatelessWidget {
           ),
           SizedBox(height: 10),
           FloatingActionButton(
+            backgroundColor: Colors.greenAccent,
+
             onPressed: () {
               _shareLocationUrl(context, locationController);
             },
@@ -50,6 +52,8 @@ class MapScreen extends StatelessWidget {
           ),
           SizedBox(height: 10),
           FloatingActionButton(
+            backgroundColor: Colors.greenAccent,
+
             onPressed: () {
               _requestTrackingUrl(context);
             },
@@ -127,16 +131,22 @@ class MapScreen extends StatelessWidget {
   }
 
   void _trackUser(String url) {
-    // Extract latitude and longitude from the URL
     RegExp regExp = RegExp(r'query=(-?\d+\.\d+),(-?\d+\.\d+)');
     Match? match = regExp.firstMatch(url);
+
     if (match != null) {
       double lat = double.parse(match.group(1)!);
       double lng = double.parse(match.group(2)!);
       LatLng otherUserLocation = LatLng(lat, lng);
 
-      // Update polyline
-      locationController.addPolyline(otherUserLocation);
+      if (locationController.currentPosition.value != null) {
+        LatLng currentLocation = locationController.currentPosition.value!;
+        locationController.addPolyline(currentLocation, otherUserLocation);
+      } else {
+        ScaffoldMessenger.of(Get.context!).showSnackBar(
+          SnackBar(content: Text('Error: Unable to retrieve current location.')),
+        );
+      }
     } else {
       ScaffoldMessenger.of(Get.context!).showSnackBar(
         SnackBar(content: Text('Invalid URL. Please enter a valid maps URL.')),

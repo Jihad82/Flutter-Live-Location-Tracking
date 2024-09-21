@@ -8,7 +8,7 @@ import 'package:location/location.dart';
 class LocationController extends GetxController {
   var currentPosition = Rx<LatLng?>(null);
   var markers = <String, Marker>{}.obs;
-  var polylines = <String, Polyline>{}.obs; // New observable for polylines
+  var polylines = <String, Polyline>{}.obs; // Polylines for tracking routes
   FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
   late GoogleMapController mapController;
@@ -69,15 +69,28 @@ class LocationController extends GetxController {
     return _firestore.collection('locations').snapshots();
   }
 
-  // New method to add a polyline
-  void addPolyline(LatLng otherUserLocation) {
+  // Updated method to add polyline between the user's location and another location
+  void addPolyline(LatLng currentLocation, LatLng otherUserLocation) {
+    if (currentLocation == null || otherUserLocation == null) {
+      return;
+    }
+
     final polylineId = 'userTracking';
-    polylines[polylineId] = Polyline(
-      polylineId: PolylineId(polylineId),
-      points: [currentPosition.value!, otherUserLocation], // Create a polyline between users
-      color: Colors.red,
-      width: 5,
-    );
-    update(); // Refresh the UI
+    final List<LatLng> polylinePoints = [currentLocation, otherUserLocation];
+
+    try {
+      polylines[polylineId] = Polyline(
+        polylineId: PolylineId(polylineId),
+        points: polylinePoints,
+        color: Colors.red,
+        width: 5,
+        startCap: Cap.roundCap,
+        endCap: Cap.buttCap,
+        patterns: [PatternItem.dash(30), PatternItem.gap(10)],
+      );
+      update(); // Refresh the UI
+    } catch (e) {
+
+    }
   }
 }
